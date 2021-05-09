@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const { MONGODB_URI } = require("../secret");
 const authRoutes = require("./routes/authRoutes");
+const requireAuth = require("./middlewares/requireAuth");
 
 const app = express();
 app.use(express.json());
@@ -20,8 +21,8 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", (err) => {
   console.log("Error connecting on Mongo", err);
 });
-app.get("/", (req, res) => {
-  res.send("You did it boy!");
+app.get("/", requireAuth, (req, res) => {
+  res.send(`Hello user, your email is ${req.user.email}`);
 });
 
 app.listen(3000, () => {
