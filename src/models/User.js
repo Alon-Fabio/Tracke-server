@@ -8,9 +8,9 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, maxLength: 10 },
 });
 
-userSchema.pre("save", function () {
+userSchema.pre("save", function (next) {
   const user = this;
-  if (!userSchema.isModified("password")) {
+  if (!user.isModified("password")) {
     return next();
   }
 
