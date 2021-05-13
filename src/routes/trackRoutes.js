@@ -13,18 +13,17 @@ router.use(requireAuth);
 
 router.get("/tracks", async (req, res) => {
   const tracks = await Track.find({ userId: req.user._id });
-
   res.send(tracks);
 });
 
 router.post("/tracks", async (req, res) => {
-  const { name, location } = req.body;
+  const { name, locations } = req.body;
 
-  if (!name || !location) return res.status(422).send({ error: errMsgDataSyn });
+  if (!name || !locations)
+    return res.status(422).send({ error: errMsgDataSyn });
 
   try {
-    let track = new Track({ name, location, userId: req.user._id });
-    console.log({ name, location, userId: req.user._id });
+    let track = new Track({ name, locations, userId: req.user._id });
     await track.save((err, saved) => {
       if (err) console.log(err);
     });
