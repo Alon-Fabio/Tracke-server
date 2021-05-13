@@ -1,5 +1,6 @@
 // Schema imports
 require("./models/User");
+require("./models/Track");
 
 // Libraries
 const express = require("express");
@@ -7,6 +8,7 @@ const mongoose = require("mongoose");
 
 // Files
 const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
 const requireAuth = require("./middlewares/requireAuth");
 
 // Imports
@@ -17,6 +19,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(authRoutes);
+app.use(trackRoutes);
 
 // DB config
 mongoose.connect(MONGODB_URI, {
