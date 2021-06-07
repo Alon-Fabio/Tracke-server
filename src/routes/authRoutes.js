@@ -16,11 +16,12 @@ router.post("/signup", async (req, res) => {
   try {
     let user = new User({ email, password });
     // user.markModified("password");
-    await user.save((err, saved) => {
-      if (err) console.log(err);
-    });
+
+    // Will try to upload to user schema. if the upload fails, will throw an error.
+    await user.save();
 
     const token = jwt.sign({ userId: user._id }, JWT_PHRASE);
+
     res.send({ token });
   } catch (err) {
     console.error(err);
